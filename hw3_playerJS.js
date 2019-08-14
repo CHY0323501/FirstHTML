@@ -370,6 +370,7 @@ function changeCSS() {
         controlpanel_two.nextElementSibling.style.top = "180%";
         list.title = "Close_EditMySong";
         music_list.style.border = "solid 5px rgba(255, 255, 255,0.8)";
+        
         setTimeout(function () {
             music_list.classList.add("music_list_bg");
             music_list.style.opacity = "1";
@@ -378,6 +379,7 @@ function changeCSS() {
                 controlpanel_two.children[i].style.marginLeft = "2%";
             }
             music_update.classList.toggle("ani-menuupdate");
+            VolumeSlider.style.transform = "translate(78px,55PX)";
         }, 1000);
     } else {
         list.title = "EditMySong";
@@ -391,6 +393,7 @@ function changeCSS() {
                 controlpanel_two.children[i].style.marginLeft = "5%";
             }
             music_update.classList.toggle("ani-menuupdate");
+            VolumeSlider.style.transform = "translate(68px,55PX)";
         }, 1000);
     }
     

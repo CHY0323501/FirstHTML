@@ -197,7 +197,7 @@ marquee {
 
 .Slider {
     -webkit-appearance: none; /* Override default CSS styles */
-    width: 25%; /* Full-width */
+    width: 130px; /* Full-width */
     height: 6px; /* Specified height */
     background: #d3d3d3; /* Grey background */
     outline: none; /* Remove outline */
@@ -238,7 +238,7 @@ marquee {
 #VolumeSlider {
     position: absolute;
     left: 50%;
-    transform: translate(92px,55PX);
+    transform: translate(67%,55PX);
 }
 
 .vol_adjust {
