@@ -19,12 +19,12 @@ var list = document.getElementById("list");
 var music_list = document.getElementById("music_list");
 var Repeat_all = document.getElementById("Repeat_all");
 var Shuffle = document.getElementById("Shuffle");
-//var timebar = document.getElementById("timebar");
-//var nowtime = document.getElementById("nowtime");
 var Play = document.getElementById("Play");
 var song_source = document.getElementById("song_source");
 var song_target = document.getElementById("song_target");
 var program = document.getElementById("program");
+var controlpanel_two = document.getElementById("controlpanel_two");
+var music_update = document.getElementById("music_update");
 
 //事件監聽器
 controlpanel_one.addEventListener("click", objEvent);
@@ -117,7 +117,7 @@ function objEvent2(evt2) {
             break;
     }
 }
-//從song_source中讀歌曲到歌本中(加入事件監聽器，若song_target有子節點(onchange)，則播放song_target中歌曲(再讀一次song_target中的歌到option底下，先移除原來的option))function DefaultSong() {    for (i = 0; i < song_source.children.length; i++) {        var get_option = document.createElement("option");        var Source_node = song_source.children[i];        get_option.value = Source_node.title;        get_option.innerText = Source_node.innerText;        musicMenu.appendChild(get_option);          //在musicMenu子節點創建option元素        Source_node.draggable = "true";             //將歌本中每個元素都設為可拖曳的狀態        Source_node.id = "song" + (i + 1);          //因拖曳時每個物件需有ID，故編列流水號    }    nowSong.src = musicMenu.options[0].value; //重load一次歌曲    audio.load();}//更新歌本function updateMusic() {    for (i = musicMenu.length - 1; i >= 0; i--) {                //先將musicMenu中的option清除，從後面清回來        musicMenu.removeChild(musicMenu.children[i]);    }    for (i = 0; i < song_target.children.length; i++) {        var get_option = document.createElement("option");        var Target_node = song_target.children[i];        get_option.value = Target_node.title;        get_option.innerText = Target_node.innerText;        musicMenu.appendChild(get_option);          //在musicMenu子節點創建option元素    }    nowSong.src = musicMenu.options[0].value;    audio.load();    checkNowStatement();    changeMusicMenu();}//從song_source中拉歌曲function drag(evt) {    evt.dataTransfer.setData("text", evt.target.id);}//將原本在song_source中的歌移除並加到song_targetfunction drop(evt, obj) {    evt.preventDefault();
+//從song_source中讀歌曲到歌本中(加入事件監聽器，若song_target有子節點(onchange)，則播放song_target中歌曲(再讀一次song_target中的歌到option底下，先移除原來的option))function DefaultSong() {    for (i = 0; i < song_source.children.length; i++) {        var get_option = document.createElement("option");        var Source_node = song_source.children[i];        get_option.value = Source_node.title;        get_option.innerText = Source_node.innerText;        musicMenu.appendChild(get_option);          //在musicMenu子節點創建option元素        Source_node.draggable = "true";             //將歌本中每個元素都設為可拖曳的狀態        Source_node.id = "song" + (i + 1);          //因拖曳時每個物件需有ID，故編列流水號    }    nowSong.src = musicMenu.options[0].value; //重load一次歌曲    audio.load();}//更新歌本function updateMusic() {    for (i = musicMenu.length - 1; i >= 0; i--) {                //先將musicMenu中的option清除，從後面清回來        musicMenu.removeChild(musicMenu.children[i]);    }    for (i = 0; i < song_target.children.length; i++) {        var get_option = document.createElement("option");        var Target_node = song_target.children[i];        get_option.value = Target_node.title;        get_option.innerText = Target_node.innerText;        musicMenu.appendChild(get_option);          //在musicMenu子節點創建option元素    }    nowSong.src = musicMenu.options[0].value;    audio.load();    changeMusicMenu();    checkNowStatement();}//從song_source中拉歌曲function drag(evt) {    evt.dataTransfer.setData("text", evt.target.id);}//將原本在song_source中的歌移除並加到song_targetfunction drop(evt, obj) {    evt.preventDefault();
     var data = evt.dataTransfer.getData("text");
     obj.appendChild(document.getElementById(data));        //在父節點(song_source或song_target加入子節點，避免在歌曲底下加入子節點)}//將歌曲放置到song_target中，若沒有此function將無法放進去function allowDrop(evt) {    evt.preventDefault();}//將時間從秒數轉換為幾分幾秒的格式function getTimeFormat(timeSec) {
     minute = Math.floor(timeSec / 60);
@@ -250,12 +250,16 @@ function ChangeMarquee(x) {
         marquee_now_song.innerText = "目前播放：" + musicMenu.options[index].innerText;
     } else if (x == "pause") {
         marquee_now_song.innerText = "-音樂暫停-";
+        checkNowStatement();
     } else if (x == "stop") {
         marquee_now_song.innerText = "-音樂停止-";
+        checkNowStatement();
     } else if (x == "fast") {
         marquee_now_song.innerText = "-音樂快轉-";
+        checkNowStatement();
     } else if (x == "rewind") {
         marquee_now_song.innerText = "-音樂倒轉-";
+        checkNowStatement();
     } else if (x == "shuffle") {
         marquee_now_song.innerText = "-隨機播放-";
     } else if (x == "repeat_one") {
@@ -263,16 +267,13 @@ function ChangeMarquee(x) {
     } else if (x == "Repeat_all") {
         marquee_now_song.innerText = "-全曲循環-";
     }
-    if (x != "play") {
-        checkNowStatement();
-    }
 }
 //判斷目前是否播放顯示對應跑馬燈
 function checkNowStatement() {
     if (controlpanel_one.firstElementChild.nextElementSibling.nextElementSibling.id == "Pause") {
         setTimeout(function () { ChangeMarquee("play"); }, 2000);
     } else {
-        setTimeout(function () { marquee_now_song.innerText = "-請點擊播放-"; }, 2000);
+        setTimeout(function () { marquee_now_song.innerText = "-請點擊播放-"; }, 3000);
     }
 }
 //單曲循環
@@ -364,6 +365,7 @@ function slider_Change_control() {
 function changeCSS() {
     player.classList.toggle("player_change");
     info_area.nextElementSibling.classList.toggle("button_change");
+    
     if (list.title == "EditMySong") {
         controlpanel_two.nextElementSibling.style.top = "180%";
         list.title = "Close_EditMySong";
@@ -371,12 +373,25 @@ function changeCSS() {
         setTimeout(function () {
             music_list.classList.add("music_list_bg");
             music_list.style.opacity = "1";
+            music_update.style.display = "initial";
+            for (i = 0; i <= 5; i++) {
+                controlpanel_two.children[i].style.marginLeft = "2%";
+            }
+            music_update.classList.toggle("ani-menuupdate");
         }, 1000);
     } else {
         list.title = "EditMySong";
         controlpanel_two.nextElementSibling.style.top = "50%";
         music_list.style.border = "";
         music_list.style.opacity = "0";
-        setTimeout(function () { music_list.classList.remove("music_list_bg") }, 1000);
+        setTimeout(function () {
+            music_list.classList.remove("music_list_bg");
+            music_update.style.display = "none";
+            for (i = 0; i <= 5; i++) {
+                controlpanel_two.children[i].style.marginLeft = "5%";
+            }
+            music_update.classList.toggle("ani-menuupdate");
+        }, 1000);
     }
+    
 }
