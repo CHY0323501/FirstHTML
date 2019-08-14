@@ -238,7 +238,7 @@ marquee {
 #VolumeSlider {
     position: absolute;
     left: 50%;
-    transform: translate(70%,55PX);
+    transform: translate(92px,55PX);
 }
 
 .vol_adjust {
